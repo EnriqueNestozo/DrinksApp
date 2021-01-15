@@ -2,8 +2,15 @@ package com.nestozo.enriq.apptragos.data
 
 import com.nestozo.enriq.apptragos.data.model.Drink
 import com.nestozo.enriq.apptragos.vo.Resource
+import com.nestozo.enriq.apptragos.vo.RetrofitClient
 
 class DataSource {
+
+    suspend fun getDrinkByName(drinkName: String): Resource<List<Drink>>{
+        return Resource.Success(RetrofitClient.webservice.getDrinkByName(drinkName).drinkList)
+    }
+
+    /*
     private val generateDrinkList = listOf<Drink>(
         Drink("https://i.pinimg.com/originals/d0/ae/e0/d0aee0140841f7d359154ecc4415319c.jpg","margarita","Con azucar, vodka y nueces"),
         Drink("https://cdn.kiwilimon.com/recetaimagen/28863/th5-320x320-30611.jpg","Sunrise","Bebida rica"),
@@ -20,4 +27,5 @@ class DataSource {
     fun getDrinkList(): Resource<List<Drink>>{
         return Resource.Success(generateDrinkList)
     }
+    */
 }

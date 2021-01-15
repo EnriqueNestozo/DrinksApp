@@ -4,5 +4,5 @@ import com.nestozo.enriq.apptragos.data.model.Drink
 import com.nestozo.enriq.apptragos.vo.Resource
 
 interface Repo {
-    fun getDrinkList(): Resource<List<Drink>>
+    suspend fun getDrinkList(drinkName: String): Resource<List<Drink>>
 }
