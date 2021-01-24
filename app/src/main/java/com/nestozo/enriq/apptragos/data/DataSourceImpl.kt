@@ -1,13 +1,28 @@
 package com.nestozo.enriq.apptragos.data
 
+import com.nestozo.enriq.apptragos.AppDataBase
 import com.nestozo.enriq.apptragos.data.model.Drink
+import com.nestozo.enriq.apptragos.data.model.DrinkEntity
+import com.nestozo.enriq.apptragos.domain.DataSource
 import com.nestozo.enriq.apptragos.vo.Resource
 import com.nestozo.enriq.apptragos.vo.RetrofitClient
 
-class DataSource {
+class DataSourceImpl(private val appDatabase: AppDataBase): DataSource  {
 
-    suspend fun getDrinkByName(drinkName: String): Resource<List<Drink>>{
+    override suspend fun getDrinkByName(drinkName: String): Resource<List<Drink>>{
         return Resource.Success(RetrofitClient.webservice.getDrinkByName(drinkName).drinkList)
+    }
+
+    override suspend fun insertDrinkIntoRoom(drink: DrinkEntity){
+        appDatabase.drinkDao().insertFavorite(drink)
+    }
+
+    override suspend fun getFavoritesDrinks(): Resource<List<DrinkEntity>> {
+        return Resource.Success(appDatabase.drinkDao().getAllFavoritesDrinks())
+    }
+
+    override suspend fun deleteDrink(drink: DrinkEntity) {
+        appDatabase.drinkDao().deleteDrink(drink)
     }
 
     /*
